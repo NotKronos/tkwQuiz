@@ -2,16 +2,16 @@ package me.notkronos;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Objects;
-
 import javax.swing.*;
 
-public class TrojmianKw extends JFrame implements ActionListener {
-	private static final long serialVersionUID = 1L;
+import java.util.Objects;
 
+public class TrojmianKw extends JFrame implements ActionListener {
+	float score = 0;
 	JButton button;
 	JTextField[] textFields = new JTextField[12];
 	JLabel polecenie, a, b, c, d;
+	String[] answers = { "x^2", "-2x", "-8", "x^2", "10x", "16", "x^2", "3x", "-18", "x^2", "-10x", "21"};
 	public TrojmianKw() {
 		super();
 		
@@ -20,8 +20,8 @@ public class TrojmianKw extends JFrame implements ActionListener {
 		setSize(800, 600);
 		setLayout(null);
 		
-		polecenie = new JLabel("Placeholder");
-		polecenie.setBounds(350, -10, 400, 80);
+		polecenie = new JLabel("Rozwiaz. Podniesie do potegi nalezy zapisac jako \"x^n\", miedzy minusem a liczba nie nalezy stawiac spacji.");
+		polecenie.setBounds(79, -10, 798, 80);
 		this.add(polecenie);
 		
 		a = new JLabel("(x + 2)(x-4) = ");
@@ -100,6 +100,8 @@ public class TrojmianKw extends JFrame implements ActionListener {
 		this.add(textFields[11]);
 
 		button  = new JButton("Check");
+		button.addActionListener(this);
+		button.setActionCommand("cmdOK");
 		button.setBounds(66, 400, 80, 25);
 		this.add(button);
 
@@ -108,7 +110,20 @@ public class TrojmianKw extends JFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+		if(arg0.getActionCommand().equals("cmdOK")) {
+			score = 0;
+			try {
+				for(int i = 0; i < 12; i++) {
+					if(Objects.equals(textFields[i].getText(), answers[i])) score += 1;
+				}
+
+				String result = "Twoj wynik to " + score + "/12 punktow";
+
+				JOptionPane.showMessageDialog(this, result, "informacja o wyniku", JOptionPane.INFORMATION_MESSAGE);
+			} catch (NumberFormatException e) {
+				System.err.println("i/o error");
+			}
+		}
 		
 	}
 	
